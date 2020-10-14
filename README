@@ -1,4 +1,4 @@
-dc-helper (docker-compose helper)
+dchelper (docker-compose helper)
 
 (c) valera.padolochniy@gmail.com
 This script is released under the MIT License (MIT)
