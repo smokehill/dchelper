@@ -10,23 +10,23 @@ cache = Cache()
 
 class Project:
 
-    __file = ''
-    __json_data = []
+    file_path = ''
+    json_data = [] # data from projects.json
 
     def __init__(self):
-        self.__file = os.path.dirname(__file__) + '/projects.json'
-        if os.path.isfile(self.__file) == False and os.access(self.__file, os.R_OK) == False:
+        self.file_path = os.path.dirname(__file__) + '/projects.json'
+        if os.path.isfile(self.file_path) == False and os.access(self.file_path, os.R_OK) == False:
             sys.exit('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
 
-        with open(self.__file) as f:
-            self.__json_data = json.load(f)
+        with open(self.file_path) as f:
+            self.json_data = json.load(f)
 
     def list(self):
         proc_list = cache.get_proc_list()
         i = 1
-        for data in self.__json_data:
+        for data in self.json_data:
             status = '\033[92m[+]\033[0m' if str(i) in proc_list else '\033[91m[-]\033[0m'
-            n = ' ' + str(i) if len(self.__json_data) < 100 and i < 10 else '' + str(i)
+            n = ' ' + str(i) if len(self.json_data) < 100 and i < 10 else '' + str(i)
             print('{0} {1} {2}'.format(status, n, data['title']))
             i = i + 1
 
@@ -40,7 +40,7 @@ class Project:
             sys.exit('{0}: {1}'.format('Warning', 'Project is running.'))
 
         try:
-            path = self.__json_data[int(number) - 1]['path']
+            path = self.json_data[int(number) - 1]['path']
             subprocess.call('cd {0} && docker-compose up -d'.format(path), shell=True)
             cache.remember(number)
         except Exception as e:
@@ -56,7 +56,7 @@ class Project:
             sys.exit('{0}: {1}'.format('Warning', 'Project is not running.'))
 
         try:
-            path = self.__json_data[int(number) - 1]['path']
+            path = self.json_data[int(number) - 1]['path']
             subprocess.call('cd {0} && docker-compose down'.format(path), shell=True)
             cache.forget(number)
         except Exception as e:
