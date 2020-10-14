@@ -9,12 +9,12 @@ from project import Project
 parser = argparse.ArgumentParser(
     prog='tool',
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=30),
-    description='wrapper for docker-compose'
+    description='wrappers for docker-compose'
 )
 parser.add_argument('--list', help="display docker-compose projects", action="store_true")
-parser.add_argument('--up', help="docker-compose up (single)", action="store_true")
-parser.add_argument('--down', help="docker-compose down (single)", action="store_true")
-parser.add_argument('--reset', help="docker-compose down (multiple)", action="store_true")
+parser.add_argument('--up', help="docker-compose up", action="store_true")
+parser.add_argument('--down', help="docker-compose down", action="store_true")
+parser.add_argument('--reset', help="docker-compose down for all", action="store_true")
 args = parser.parse_args()
 
 # traceback Ctrl-C
