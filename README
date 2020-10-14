@@ -14,4 +14,7 @@ DESCRIPTION
 Console tool that helps to up and down local projects via docker-compose.
 
 INSTALL & USAGE (for Linux)
-in development...
+Create `projects.json` based on `projects.json.example`.
+
+Run for help:
+$ python main.py -h
