@@ -6,6 +6,7 @@ import argparse
 
 from project import Project
 
+
 parser = argparse.ArgumentParser(
     prog='tool',
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=30),
