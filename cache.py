@@ -7,7 +7,7 @@ class Cache:
 
     def __init__(self):
         # init file
-        self.__file = os.getcwd() + '/.cache'
+        self.__file = os.path.dirname(__file__) + '/.cache'
         if os.path.isfile(self.__file) == False:
             f = open(self.__file, 'w')
             f.close()

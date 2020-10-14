@@ -14,7 +14,7 @@ class Project:
     __json_data = []
 
     def __init__(self):
-        self.__file = os.getcwd() + '/projects.json'
+        self.__file = os.path.dirname(__file__) + '/projects.json'
         if os.path.isfile(self.__file) == False and os.access(self.__file, os.R_OK) == False:
             sys.exit('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
 
