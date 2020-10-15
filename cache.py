@@ -3,12 +3,14 @@ import os
 
 class Cache:
 
-    file_path = ''
+    file_path = '.cache'
     proc_list = [] # contains projects numbers
 
-    def __init__(self):
+    def __init__(self, f_path = None):
+        if f_path is not None:
+            self.file_path = f_path
+
         # init file
-        self.file_path = os.path.dirname(__file__) + '/.cache'
         if os.path.isfile(self.file_path) == False:
             f = open(self.file_path, 'w')
             f.close()
@@ -27,15 +29,17 @@ class Cache:
             f.close()
 
     def forget(self, number = None):
-          if number is None:
-              self.proc_list = []
-              os.remove(self.file_path)
-          else:
-              if str(number) in self.proc_list:
-                  self.proc_list.remove(str(number))
-                  f = open(self.file_path, 'w')
-                  f.write(' '.join(self.proc_list))
-                  f.close()
+        if number is None and self.file_path != False:
+            self.proc_list = []
+            os.remove(self.file_path)
 
-    def get_proc_list(self):
-        return self.proc_list
+        else:
+            if str(number) in self.proc_list:
+                self.proc_list.remove(str(number))
+                f = open(self.file_path, 'w')
+                f.write(' '.join(self.proc_list))
+                f.close()
+
+
+if __name__ == '__main__':
+    name = "Cache"

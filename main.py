@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
+import os
 import sys
 import signal
 import argparse
+import subprocess
 
 from project import Project
 
@@ -16,6 +18,7 @@ parser.add_argument('--list', help="display docker-compose projects", action="st
 parser.add_argument('--up', help="docker-compose up", action="store_true")
 parser.add_argument('--down', help="docker-compose down", action="store_true")
 parser.add_argument('--reset', help="docker-compose down for all", action="store_true")
+parser.add_argument('--test', help="unit tests", action="store_true")
 args = parser.parse_args()
 
 # traceback Ctrl-C
@@ -35,6 +38,10 @@ def main():
 
     elif args.reset:
         project.reset()
+
+    elif args.test:
+        run_tests = os.path.dirname(__file__) + '/tests.py'
+        subprocess.call("python {0}".format(run_tests), shell=True)
 
     else:
         print("use [-h] for help")
