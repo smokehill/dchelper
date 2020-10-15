@@ -3,6 +3,7 @@ import unittest
 
 from cache import Cache
 
+
 cache = Cache('.cache_test')
 
 class TestCacheMethods(unittest.TestCase):
