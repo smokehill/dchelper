@@ -24,11 +24,6 @@ signal.signal(signal.SIGINT, lambda x,y: sys.exit('\n{0}: {1}'.format('Warning',
 project = Project()
 
 def main():
-    """
-    Main program.
-    Parses command line and executes available options.
-    """
-
     if args.list:
         project.list()
 
