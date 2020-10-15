@@ -3,12 +3,14 @@ import os
 
 class Cache:
 
-    file_path = '.cache'
-    proc_list = [] # contains projects numbers
+    file_path = ''
+    proc_list = [] # projects numbers
 
-    def __init__(self, f_path = None):
-        if f_path is not None:
-            self.file_path = f_path
+    def __init__(self, f_name = None):
+        if f_name is not None:
+            self.file_path = os.path.dirname(__file__) + '/' + f_name
+        else:
+            self.file_path = os.path.dirname(__file__) + '/.cache'
 
         # init file
         if os.path.isfile(self.file_path) == False:

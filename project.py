@@ -8,11 +8,12 @@ from cache import Cache
 
 class Project:
 
-    file_path = 'projects.json'
+    file_path = ''
     json_data = [] # data from projects.json
     cache = None
 
     def __init__(self):
+        self.file_path = os.path.dirname(__file__) + '/projects.json'
         if os.path.isfile(self.file_path) == False and os.access(self.file_path, os.R_OK) == False:
             sys.exit('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
 
@@ -21,7 +22,6 @@ class Project:
 
         # init cache
         self.cache = Cache()
-        # self.cache.init()
 
     def list(self):
         proc_list = self.cache.proc_list
