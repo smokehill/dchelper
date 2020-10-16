@@ -39,7 +39,3 @@ class Cache:
                 f = open(self.file_path, 'w')
                 f.write(' '.join(self.proc_list))
                 f.close()
-
-
-if __name__ == '__main__':
-    name = "Cache"

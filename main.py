@@ -5,6 +5,8 @@ import sys
 import signal
 import argparse
 import subprocess
+# import unittest
+# import tests
 
 from project import Project
 
@@ -42,8 +44,6 @@ def main():
     elif args.test:
         run_tests = os.path.dirname(__file__) + '/tests.py'
         subprocess.call("python {0}".format(run_tests), shell=True)
-
-    else:
         print("use [-h] for help")
 
 

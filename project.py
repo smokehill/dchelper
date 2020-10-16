@@ -67,7 +67,3 @@ class Project:
     def reset(self):
         subprocess.call('docker rm -vf $(docker ps -a -q)', shell=True)
         self.cache.forget()
-
-
-if __name__ == '__main__':
-    name = "Project"
