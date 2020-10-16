@@ -5,9 +5,9 @@ import sys
 import signal
 import argparse
 import subprocess
-# import unittest
-# import tests
+import unittest
 
+import tests
 from project import Project
 
 
@@ -42,8 +42,10 @@ def main():
         project.reset()
 
     elif args.test:
-        run_tests = os.path.dirname(__file__) + '/tests.py'
-        subprocess.call("python {0}".format(run_tests), shell=True)
+        suite = unittest.TestLoader().loadTestsFromModule(tests)
+        unittest.TextTestRunner().run(suite)
+
+    else:
         print("use [-h] for help")
 
 
