@@ -6,11 +6,9 @@ class Cache:
     file_path = ''
     proc_list = [] # projects numbers
 
-    def __init__(self, f_name = None):
-        if f_name is not None:
-            self.file_path = os.path.dirname(__file__) + '/' + f_name
-        else:
-            self.file_path = os.path.dirname(__file__) + '/.cache'
+    def __init__(self, fname = None):
+        file_name = fname if fname is not None else '.cache'
+        self.file_path = os.path.dirname(__file__) + '/' + file_name
 
         # init file
         if os.path.isfile(self.file_path) == False:
