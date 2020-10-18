@@ -1,4 +1,4 @@
-dchelper (docker-compose helper)
+dchelper
 
 (c) valera.padolochniy@gmail.com
 This script is released under the MIT License (MIT)
@@ -13,7 +13,7 @@ Result of the projects list will look like this:
 
 INSTALL & USAGE (for Linux)
 
-Create `projects.json` based on `projects.json.example`.
+Create projects.json based on projects.json.example.
 
 Run for help:
 $ python main.py -h
