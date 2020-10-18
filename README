@@ -1,12 +1,8 @@
 dchelper
 
-(c) valera.padolochniy@gmail.com
-This script is released under the MIT License (MIT)
-
 DESCRIPTION
 
 Console tool that helps to up and down local projects via docker-compose.
-
 Result of the projects list will look like this:
 [-] 1 project_1
 [+] 2 project_2
