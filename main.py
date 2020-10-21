@@ -17,20 +17,28 @@ parser = argparse.ArgumentParser(
     description='wrappers for docker-compose'
 )
 parser.add_argument('--list', help="display docker-compose projects", action="store_true")
+parser.add_argument('--live', help="display docker-compose projects", action="store_true")
 parser.add_argument('--up', help="docker-compose up", action="store_true")
 parser.add_argument('--down', help="docker-compose down", action="store_true")
 parser.add_argument('--reset', help="docker-compose down for all", action="store_true")
 parser.add_argument('--test', help="unit tests", action="store_true")
 args = parser.parse_args()
 
+def fire_escape(signum, frame):
+    os.system('tput cnorm')
+    sys.exit('\n{0}: {1}'.format('Warning', 'Abnormal termination.'))
+
 # traceback Ctrl-C
-signal.signal(signal.SIGINT, lambda x,y: sys.exit('\n{0}: {1}'.format('Warning', 'Abnormal termination.')))
+signal.signal(signal.SIGINT, fire_escape)
 
 project = Project()
 
 def main():
     if args.list:
         project.list()
+
+    elif args.live:
+        project.live()
 
     elif args.up:
         project.up()
