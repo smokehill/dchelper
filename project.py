@@ -27,8 +27,14 @@ class Project:
         proc_list = self.cache.proc_list
         i = 1
         for data in self.json_data:
-            status = '\033[92m[+]\033[0m' if str(i) in proc_list else '\033[91m[-]\033[0m'
-            n = ' ' + str(i) if len(self.json_data) < 100 and i < 10 else '' + str(i)
+            status = '\033[91m[-]\033[0m'
+            if str(i) in proc_list:
+                status = '\033[92m[+]\033[0m'
+    
+            n = '\033[33m' + str(i) + '\033[0m'
+            if len(self.json_data) < 100 and i < 10:
+                n = ' \033[33m' + str(i) + '\033[0m'
+    
             print('{0} {1} {2}'.format(status, n, data['title']))
             i = i + 1
 
