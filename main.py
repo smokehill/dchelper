@@ -16,15 +16,16 @@ parser = argparse.ArgumentParser(
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=30),
     description='wrappers for docker-compose'
 )
-parser.add_argument('--list', help="display docker-compose projects", action="store_true")
-parser.add_argument('--live', help="display docker-compose projects", action="store_true")
-parser.add_argument('--up', help="docker-compose up", action="store_true")
-parser.add_argument('--down', help="docker-compose down", action="store_true")
-parser.add_argument('--reset', help="docker-compose down for all", action="store_true")
+parser.add_argument('--list', help="projects list", action="store_true")
+parser.add_argument('--live', help="projects list (live mode)", action="store_true")
+parser.add_argument('--up', help="up project", action="store_true")
+parser.add_argument('--down', help="down project", action="store_true")
+parser.add_argument('--reset', help="down all projects", action="store_true")
 parser.add_argument('--test', help="unit tests", action="store_true")
 args = parser.parse_args()
 
 def fire_escape(signum, frame):
+    # show cursor
     os.system('tput cnorm')
     sys.exit('\n{0}: {1}'.format('Warning', 'Abnormal termination.'))
 

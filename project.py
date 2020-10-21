@@ -24,7 +24,7 @@ class Project:
         # init cache
         self.cache = Cache()
 
-    def list(self, sleep = False):
+    def list(self):
         proc_list = self.cache.proc_list
         i = 1
         for data in self.json_data:
@@ -37,18 +37,14 @@ class Project:
                 number = ' \033[33m' + str(i) + '\033[0m'
     
             print('{0} {1} {2}'.format(status, number, data['title']))
-
-            if sleep == True:
-                time.sleep(0.1)
-
             i = i + 1
 
     def live(self):
-        # TODO: test usability
+        # hide cursor
         os.system('tput civis')
 
         while True:
-            self.list(True)
+            self.list()
             time.sleep(5)
 
             self.cache = Cache()
