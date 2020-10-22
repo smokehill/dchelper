@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import os
 import sys
 import signal
 import argparse
@@ -24,14 +23,15 @@ parser.add_argument('--reset', help="down all projects", action="store_true")
 parser.add_argument('--test', help="unit tests", action="store_true")
 args = parser.parse_args()
 
+# traceback Ctrl-C
 def fire_escape(signum, frame):
     # show cursor
-    os.system('tput cnorm')
-    sys.exit('\n{0}: {1}'.format('Warning', 'Abnormal termination.'))
+    subprocess.call('tput cnorm', shell=True)
+    sys.exit(0)
 
-# traceback Ctrl-C
 signal.signal(signal.SIGINT, fire_escape)
 
+# init project
 project = Project()
 
 def main():

@@ -16,7 +16,8 @@ class Project:
     def __init__(self):
         self.file_path = os.path.dirname(__file__) + '/projects.json'
         if os.path.isfile(self.file_path) == False and os.access(self.file_path, os.R_OK) == False:
-            sys.exit('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
+            print('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
+            sys.exit(1)
 
         with open(self.file_path) as f:
             self.json_data = json.load(f)
@@ -26,6 +27,7 @@ class Project:
 
     def list(self):
         proc_list = self.cache.proc_list
+
         i = 1
         for data in self.json_data:
             status = '\033[91m[-]\033[0m'
@@ -41,14 +43,14 @@ class Project:
 
     def live(self):
         # hide cursor
-        os.system('tput civis')
+        subprocess.call('tput civis', shell=True)
 
         while True:
             self.list()
             time.sleep(5)
 
             self.cache = Cache()
-            os.system('clear')
+            subprocess.call('clear', shell=True)
 
 
     def up(self):
@@ -58,14 +60,16 @@ class Project:
         number = raw_input('{0} '.format('>>>'))
 
         if number in proc_list:
-            sys.exit('{0}: {1}'.format('Warning', 'Project is running.'))
+            print('{0}: {1}'.format('Warning', 'Project is running.'))
+            sys.exit(1)
 
         try:
             path = self.json_data[int(number) - 1]['path']
             subprocess.call('cd {0} && docker-compose up -d'.format(path), shell=True)
             self.cache.remember(number)
         except Exception as e:
-            sys.exit("{0}: {1}".format('Error', e))
+            print("{0}: {1}".format('Error', e))
+            sys.exit(1)
 
     def down(self):
         proc_list = self.cache.proc_list
@@ -74,14 +78,16 @@ class Project:
         number = raw_input('{0} '.format('>>>'))
 
         if number not in proc_list:
-            sys.exit('{0}: {1}'.format('Warning', 'Project is not running.'))
+            print('{0}: {1}'.format('Warning', 'Project is not running.'))
+            sys.exit(1)
 
         try:
             path = self.json_data[int(number) - 1]['path']
             subprocess.call('cd {0} && docker-compose down'.format(path), shell=True)
             self.cache.forget(number)
         except Exception as e:
-            sys.exit("{0}: {1}".format('Error', e))
+            print("{0}: {1}".format('Error', e))
+            sys.exit(1)
 
     def reset(self):
         subprocess.call('docker rm -vf $(docker ps -a -q)', shell=True)
