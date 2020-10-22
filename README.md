@@ -8,7 +8,7 @@ Console tool that helps to up and down local projects via docker-compose.
 
 ## Install (for Linux)
 
-Create projects.json based on projects.json.example.
+Create config.json based on config.json.example.
 
 Run for help:
 <pre>

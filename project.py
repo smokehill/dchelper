@@ -10,13 +10,13 @@ from cache import Cache
 class Project:
 
     file_path = ''
-    json_data = [] # data from projects.json
+    json_data = [] # data from config.json
     cache = None
 
     def __init__(self):
-        self.file_path = os.path.dirname(__file__) + '/projects.json'
+        self.file_path = os.path.dirname(__file__) + '/config.json'
         if os.path.isfile(self.file_path) == False and os.access(self.file_path, os.R_OK) == False:
-            print('{0}: {1}'.format('Error', 'Check if projects.json exists and it\'s readable.'))
+            print('{0}: {1}'.format('Error', 'Check if config.json exists and it\'s readable.'))
             sys.exit(1)
 
         with open(self.file_path) as f:
