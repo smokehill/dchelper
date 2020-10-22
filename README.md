@@ -6,11 +6,9 @@ Console tool that helps to up and down local projects via docker-compose.
 
 ![](example.gif)
 
-## Install (for Linux)
+## Usage
 
-Create config.json based on config.json.example.
-
-Run for help:
+Create config.json based on config.json.example and run for help:
 <pre>
 $ python main.py -h
 </pre>
