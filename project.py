@@ -44,12 +44,12 @@ class Project:
     def live(self):
         # hide cursor
         subprocess.call('tput civis', shell=True)
-
+ 
         while True:
-            self.list()
-            time.sleep(5)
-
             self.cache = Cache()
+            self.list()
+
+            time.sleep(1)
             subprocess.call('clear', shell=True)
 
 
