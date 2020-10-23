@@ -33,11 +33,11 @@ class Project:
             status = '\033[91m[-]\033[0m'
             if str(i) in proc_list:
                 status = '\033[92m[+]\033[0m'
-    
-            number = '\033[33m' + str(i) + '\033[0m'
+
+            number = '\033[93m' + str(i) + '\033[0m'
             if len(self.json_data) < 100 and i < 10:
-                number = ' \033[33m' + str(i) + '\033[0m'
-    
+                number = ' \033[93m' + str(i) + '\033[0m'
+
             print('{0} {1} {2}'.format(status, number, data['title']))
             i = i + 1
 
