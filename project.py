@@ -52,7 +52,6 @@ class Project:
             time.sleep(1)
             subprocess.call('clear', shell=True)
 
-
     def up(self):
         proc_list = self.cache.proc_list
         
@@ -63,13 +62,11 @@ class Project:
             print('{0}: {1}'.format('Warning', 'Project is running.'))
             sys.exit(1)
 
-        try:
-            path = self.json_data[int(number) - 1]['path']
-            subprocess.call('cd {0} && docker-compose up -d'.format(path), shell=True)
+        path = self.json_data[int(number) - 1]['path']
+        status = subprocess.call('cd {0} && docker-compose up -d'.format(path), shell=True)
+
+        if status == 0:
             self.cache.remember(number)
-        except Exception as e:
-            print("{0}: {1}".format('Error', e))
-            sys.exit(1)
 
     def down(self):
         proc_list = self.cache.proc_list
@@ -81,13 +78,11 @@ class Project:
             print('{0}: {1}'.format('Warning', 'Project is not running.'))
             sys.exit(1)
 
-        try:
-            path = self.json_data[int(number) - 1]['path']
-            subprocess.call('cd {0} && docker-compose down'.format(path), shell=True)
+        path = self.json_data[int(number) - 1]['path']
+        status = subprocess.call('cd {0} && docker-compose down'.format(path), shell=True)
+
+        if status == 0:
             self.cache.forget(number)
-        except Exception as e:
-            print("{0}: {1}".format('Error', e))
-            sys.exit(1)
 
     def reset(self):
         subprocess.call('docker rm -vf $(docker ps -a -q)', shell=True)
