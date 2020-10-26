@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=30),
     description='wrappers for docker-compose'
 )
+parser.add_argument('--stat', help="common statistics", action="store_true")
 parser.add_argument('--list', help="projects list", action="store_true")
 parser.add_argument('--live', help="projects list (live mode)", action="store_true")
 parser.add_argument('--up', help="up project", action="store_true")
@@ -35,7 +36,10 @@ signal.signal(signal.SIGINT, fire_escape)
 project = Project()
 
 def main():
-    if args.list:
+    if args.stat:
+        project.stat()
+
+    elif args.list:
         project.list()
 
     elif args.live:

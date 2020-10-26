@@ -25,6 +25,15 @@ class Project:
         # init cache
         self.cache = Cache()
 
+    def stat(self):
+        proc_list = self.cache.proc_list
+
+        total = '\033[94mtotal:\033[0m \033[93m' + str(len(self.json_data)) + '\033[0m' + '\033[94m,\033[0m' 
+        down = '\033[94mdown:\033[0m \033[91m' + str(len(self.json_data) - len(proc_list)) + '\033[0m' + '\033[94m,\033[0m' 
+        up = '\033[94mup:\033[0m \033[92m' + str(len(proc_list)) + '\033[0m'
+
+        print('{0} {1} {2}'.format(total, down, up))
+
     def list(self):
         proc_list = self.cache.proc_list
 
@@ -44,6 +53,7 @@ class Project:
     def live(self):
         # hide cursor
         subprocess.call('tput civis', shell=True)
+        subprocess.call('clear', shell=True)
  
         while True:
             self.cache = Cache()
