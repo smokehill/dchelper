@@ -95,5 +95,14 @@ class Project:
             self.cache.forget(number)
 
     def reset(self):
-        subprocess.call('docker rm -vf $(docker ps -a -q)', shell=True)
+        print('Stopping and removing containers...')
+        subprocess.call('docker stop $(docker ps -a -q)', shell=True)
+        subprocess.call('docker rm $(docker ps -a -q)', shell=True)
+
+        print('\nRemoving networks...')
+        subprocess.call('docker network prune -f', shell=True)
+
+        print('Removing volumes...')
+        subprocess.call('docker volume prune -f', shell=True)
+
         self.cache.forget()
