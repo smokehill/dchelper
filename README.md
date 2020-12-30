@@ -13,7 +13,7 @@ dchelp
 
 ## Settings
 
-After installation fill `~/.config/dchelp/config.json` with your projects list.
+After installation fill `~/.config/dchelp/data.json` with your projects list.
 
 Example:
 ```json

@@ -7,7 +7,7 @@ import subprocess
 import unittest
 
 import tests
-from project import Project
+from dchelp import DCHelp
 
 
 parser = argparse.ArgumentParser(
@@ -31,28 +31,26 @@ def fire_escape(signum, frame):
     sys.exit(0)
 
 signal.signal(signal.SIGINT, fire_escape)
-
-# init project
-project = Project()
+dchelp = DCHelp()
 
 def main():
     if args.stat:
-        project.stat()
+        dchelp.stat()
 
     elif args.list:
-        project.list()
+        dchelp.list()
 
     elif args.live:
-        project.live()
+        dchelp.live()
 
     elif args.up:
-        project.up()
+        dchelp.up()
 
     elif args.down:
-        project.down()
+        dchelp.down()
 
     elif args.reset:
-        project.reset()
+        dchelp.reset()
 
     elif args.test:
         suite = unittest.TestLoader().loadTestsFromModule(tests)
