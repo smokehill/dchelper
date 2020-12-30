@@ -8,8 +8,9 @@ fi
 if [ ! -d ~/.config/dchelp ]; then
     mkdir ~/.config/dchelp
     chmod 775 ~/.config/dchelp
-    cp ./sh/config.json ~/.config/dchelp/config.json
+    touch ~/.config/dchelp/config.json
     chmod 775 ~/.config/dchelp/config.json
+    echo "[]" >> ~/.config/dchelp/config.json
 fi
 
 if [[ "$1" != "" ]]; then

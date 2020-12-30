@@ -16,4 +16,4 @@ rm -f /usr/local/bin/dchelp
 rm -rf /usr/local/dchelp
 rm -rf ~/.cache/dchelp
 rm -rf ~/.config/dchelp
-echo "OK"
+echo "Ok"
