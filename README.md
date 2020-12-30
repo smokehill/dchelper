@@ -11,6 +11,20 @@ make install
 dchelp
 </pre>
 
+## Settings
+
+After installation fill `~/.config/dchelp/config.json` with your projects list.
+
+Example:
+```json
+[
+    {
+        "title": "project",
+        "path": "/path/to/project/"
+    }
+]
+```
+
 ## Example
 
 ![](example.gif)
