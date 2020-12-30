@@ -7,8 +7,8 @@ class Cache:
     proc_list = [] # projects numbers
 
     def __init__(self, fname = None):
-        file_name = fname if fname is not None else '.cache'
-        self.file_path = os.path.dirname(__file__) + '/' + file_name
+        file_name = fname if fname is not None else 'proc'
+        self.file_path = os.path.expanduser('~') + '/.cache/dchelp/' + file_name
 
         # init file
         if os.path.isfile(self.file_path) == False:

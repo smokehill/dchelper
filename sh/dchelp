@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ ! -d ~/.cache/dchelp ]; then
+    mkdir ~/.cache/dchelp
+    chmod 775 ~/.cache/dchelp
+fi
+
+if [ ! -d ~/.config/dchelp ]; then
+    mkdir ~/.config/dchelp
+    chmod 775 ~/.config/dchelp
+    cp ./sh/config.json ~/.config/dchelp/config.json
+    chmod 775 ~/.config/dchelp/config.json
+fi
+
+if [[ "$1" != "" ]]; then
+    $(which python) /usr/local/dchelp/main.py $1
+else
+    $(which python) /usr/local/dchelp/main.py
+fi

@@ -9,7 +9,7 @@ class TestCacheMethods(unittest.TestCase):
     cache = None
 
     def __init__(self, *args, **kwargs):
-        self.cache = Cache('.cache_test')
+        self.cache = Cache('proc_test')
         super(TestCacheMethods, self).__init__(*args, **kwargs)
 
     def test_01_remember(self):

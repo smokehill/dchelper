@@ -14,7 +14,7 @@ class Project:
     cache = None
 
     def __init__(self):
-        self.file_path = os.path.dirname(__file__) + '/config.json'
+        self.file_path = os.path.expanduser('~') + '/.config/dchelp/' +  '/config.json'
         if os.path.isfile(self.file_path) == False and os.access(self.file_path, os.R_OK) == False:
             print('{0}: {1}'.format('Error', 'Check if config.json exists and it\'s readable.'))
             sys.exit(1)
