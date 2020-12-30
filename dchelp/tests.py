@@ -26,6 +26,6 @@ class TestCacheMethods(unittest.TestCase):
 
     def test_03_forget(self):
         self.cache.forget()
-        is_file = os.path.isfile(self.cache.file_path)
+        is_file = os.path.isfile(self.cache.proc_file)
 
         self.assertFalse(is_file)
