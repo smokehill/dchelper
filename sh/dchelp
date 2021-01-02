@@ -13,8 +13,4 @@ if [ ! -d ~/.config/dchelp ]; then
     echo "[]" >> ~/.config/dchelp/data.json
 fi
 
-if [[ "$1" != "" ]]; then
-    $(which python) /usr/local/dchelp/main.py $1
-else
-    $(which python) /usr/local/dchelp/main.py
-fi
+$(which python) /usr/local/dchelp/main.py $*
