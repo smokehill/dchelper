@@ -11,7 +11,7 @@ from dchelp import DCHelp
 
 
 parser = argparse.ArgumentParser(
-    prog='tool',
+    prog='dchelp',
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=30),
     description='wrappers for docker-compose'
 )
