@@ -14,11 +14,11 @@ class DCHelp:
     cache = None
 
     def __init__(self):
+        # init data
         f_path = os.path.expanduser('~') + '/.config/dchelp/data.json'
         if os.path.isfile(f_path) == False and os.access(f_path, os.R_OK) == False:
             print("%s not exists or not readable." % f_path)
             sys.exit(1)
-
         with open(f_path) as f:
             self.data = json.load(f)
 
@@ -32,7 +32,6 @@ class DCHelp:
                 print('No projects.')
             else:
                 return func(self, *args, **kwargs)
-
         return wrap
 
     def stat(self):
