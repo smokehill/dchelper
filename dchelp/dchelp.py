@@ -38,9 +38,9 @@ class DCHelp:
     def stat(self):
         proc_list = self.cache.proc_list
 
-        total = '\033[94mtotal:\033[0m \033[93m' + str(len(self.data)) + '\033[0m' + '\033[94m,\033[0m' 
-        down = '\033[94mdown:\033[0m \033[91m' + str(len(self.data) - len(proc_list)) + '\033[0m' + '\033[94m,\033[0m' 
-        up = '\033[94mup:\033[0m \033[92m' + str(len(proc_list)) + '\033[0m'
+        total = "\033[94m{title}\033[0m \033[93m{number}\033[0m\033[94m{char}\033[0m".format(title='total:', number=str(len(self.data)), char=',')
+        down = "\033[94m{title}\033[0m \033[91m{number}\033[0m\033[94m{char}\033[0m".format(title='down:', number=(str(len(self.data) - len(proc_list))), char=',')
+        up = "\033[94m{title}\033[0m \033[92m{number}\033[0m".format(title='up:', number=str(len(proc_list)))
 
         print("{total} {down} {up}".format(total=total, down=down, up=up))
 
