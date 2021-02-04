@@ -16,7 +16,7 @@ class DCHelp:
     def __init__(self):
         f_path = os.path.expanduser('~') + '/.config/dchelp/data.json'
         if os.path.isfile(f_path) == False and os.access(f_path, os.R_OK) == False:
-            print('{0}: {1}'.format('Error', 'Check if ' + f_path + ' exists and it\'s readable.'))
+            print("%s not exists or not readable." % f_path)
             sys.exit(1)
 
         with open(f_path) as f:
@@ -29,7 +29,7 @@ class DCHelp:
         @functools.wraps(func)
         def wrap(self, *args, **kwargs):
             if len(self.data) == 0:
-                print('{0}: {1}'.format('Info', 'No data.'))
+                print('No projects.')
             else:
                 return func(self, *args, **kwargs)
 
@@ -42,7 +42,7 @@ class DCHelp:
         down = '\033[94mdown:\033[0m \033[91m' + str(len(self.data) - len(proc_list)) + '\033[0m' + '\033[94m,\033[0m' 
         up = '\033[94mup:\033[0m \033[92m' + str(len(proc_list)) + '\033[0m'
 
-        print('{0} {1} {2}'.format(total, down, up))
+        print("{total} {down} {up}".format(total=total, down=down, up=up))
 
     @check_data
     def list(self):
@@ -58,7 +58,7 @@ class DCHelp:
             if len(self.data) < 100 and i < 10:
                 number = ' \033[93m' + str(i) + '\033[0m'
 
-            print('{0} {1} {2}'.format(status, number, item['title']))
+            print("{status} {number} {title}".format(status=status, number=number, title=item['title']))
             i = i + 1
 
     @check_data
@@ -77,16 +77,23 @@ class DCHelp:
     @check_data
     def up(self):
         proc_list = self.cache.proc_list
-        
-        print('Project number:')
-        number = raw_input('{0} '.format('>>>'))
 
-        if number in proc_list:
-            print('{0}: {1}'.format('Warning', 'Project is running.'))
+        try:
+            print('Project number:')
+            number = int(raw_input('>>> '))
+            if number is None or number <= 0 or number > len(self.data):
+                print('Bad argument!')
+                sys.exit(1)
+        except ValueError:
+            print('Bad argument!')
+            sys.exit(1)
+
+        if str(number) in proc_list:
+            print('Project is running.')
             sys.exit(1)
 
         path = self.data[int(number) - 1]['path']
-        status = subprocess.call('cd {0} && docker-compose up -d'.format(path), shell=True)
+        status = subprocess.call("cd %s && docker-compose up -d" % path, shell=True)
 
         if status == 0:
             self.cache.remember(number)
@@ -95,15 +102,22 @@ class DCHelp:
     def down(self):
         proc_list = self.cache.proc_list
 
-        print('Project number:')
-        number = raw_input('{0} '.format('>>>'))
+        try:
+            print('Project number:')
+            number = int(raw_input('>>> '))
+            if number is None or number <= 0 or number > len(self.data):
+                print('Bad argument!')
+                sys.exit(1)
+        except ValueError:
+            print('Bad argument!')
+            sys.exit(1)
 
-        if number not in proc_list:
-            print('{0}: {1}'.format('Warning', 'Project is not running.'))
+        if str(number) not in proc_list:
+            print('Project is not running.')
             sys.exit(1)
 
         path = self.data[int(number) - 1]['path']
-        status = subprocess.call('cd {0} && docker-compose down'.format(path), shell=True)
+        status = subprocess.call("cd %s && docker-compose down" % path, shell=True)
 
         if status == 0:
             self.cache.forget(number)
