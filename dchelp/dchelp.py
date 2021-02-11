@@ -4,6 +4,7 @@ import subprocess
 import json
 import time
 import functools
+import curses
 
 from cache import Cache
 
@@ -61,17 +62,46 @@ class DCHelp:
             i = i + 1
 
     @check_data
-    def live(self):
-        # hide cursor
-        subprocess.call('tput civis', shell=True)
-        subprocess.call('clear', shell=True)
- 
-        while True:
-            self.cache = Cache()
-            self.list()
+    def live(self, stdscr):
+        # # hide cursor
+        # subprocess.call('tput civis', shell=True)
+        # subprocess.call('clear', shell=True)
+        # while True:
+        #     self.cache = Cache()
+        #     self.list()
+        #     time.sleep(1)
+        #     subprocess.call('clear', shell=True)
 
-            time.sleep(1)
-            subprocess.call('clear', shell=True)
+        k = 0
+
+        stdscr.clear()
+        stdscr.refresh()
+
+        curses.curs_set(0)
+        curses.use_default_colors()
+
+        curses.start_color()
+        curses.init_pair(1, 0, 2)
+
+        while (k != ord('q')):
+
+            stdscr.clear()
+            height, width = stdscr.getmaxyx()
+
+            # TODO:
+
+            # bottom info
+            bottom_info = "Press 'q' to exit"
+            stdscr.attron(curses.color_pair(1))
+            stdscr.addstr(height - 1, 0, bottom_info)
+            stdscr.addstr(height - 1, len(bottom_info), " " * (width - len(bottom_info) - 1))
+            stdscr.attroff(curses.color_pair(1))
+
+            stdscr.timeout(1000) # 1 sec.
+            stdscr.refresh()
+
+            k = stdscr.getch()
+
 
     @check_data
     def up(self):

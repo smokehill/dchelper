@@ -5,6 +5,7 @@ import signal
 import argparse
 import subprocess
 import unittest
+import curses
 
 import tests
 from dchelp import DCHelp
@@ -41,7 +42,7 @@ def main():
         dchelp.list()
 
     elif args.live:
-        dchelp.live()
+        curses.wrapper(dchelp.live)
 
     elif args.up:
         dchelp.up()
