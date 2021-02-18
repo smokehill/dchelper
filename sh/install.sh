@@ -1,5 +1,4 @@
 #!/bin/bash
-# dchelp install script
 
 if [ -d /usr/local/dchelp ]; then
     echo "dchelp is already installed"
@@ -7,11 +6,6 @@ if [ -d /usr/local/dchelp ]; then
 fi
 
 fail=0
-
-if [[ "$(whoami)" != "root" ]]; then
-    fail=$((fail + 1))
-    echo "Error: permission denied (run this script as root)"
-fi
 
 if [[ "$(uname)" != "Linux" ]]; then
     fail=$((fail + 1))
@@ -38,6 +32,7 @@ if [[ $fail > 0 ]]; then
 fi
 
 echo "Installing..."
-cp -r ./dchelp /usr/local/dchelp
-cp ./sh/dchelp /usr/local/bin/dchelp
+# install dchelp
+sudo cp -r ./dchelp /usr/local/dchelp
+sudo cp ./sh/dchelp /usr/local/bin/dchelp
 echo "Ok"
