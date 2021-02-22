@@ -1,5 +1,4 @@
 #!/bin/bash
-# dchelp uninstall script
 
 if [ ! -d /usr/local/dchelp ]; then
     echo "dchelp is not installed"
@@ -12,6 +11,7 @@ if [[ "$(whoami)" != "root" ]]; then
 fi
 
 echo "Uninstalling..."
+# uninstall dchelp
 rm -f /usr/local/bin/dchelp
 rm -rf /usr/local/dchelp
 rm -rf ~/.cache/dchelp
