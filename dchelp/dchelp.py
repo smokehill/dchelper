@@ -63,16 +63,10 @@ class DCHelp:
 
     @check_data
     def live(self, stdscr):
-        # # hide cursor
-        # subprocess.call('tput civis', shell=True)
-        # subprocess.call('clear', shell=True)
-        # while True:
-        #     self.cache = Cache()
-        #     self.list()
-        #     time.sleep(1)
-        #     subprocess.call('clear', shell=True)
-
         k = 0
+        total_lines = curses.LINES - 1
+        start = 0
+        end = total_lines
 
         stdscr.clear()
         stdscr.refresh()
@@ -86,12 +80,42 @@ class DCHelp:
         while (k != ord('q')):
 
             stdscr.clear()
+            self.cache = Cache()
+
             height, width = stdscr.getmaxyx()
 
-            # TODO:
+            if k == curses.KEY_RIGHT:
+                if len(self.data) > total_lines and len(self.data[start:end]) > start:
+                    start += total_lines
+                    end += start
+
+            if k == curses.KEY_LEFT:
+                if start >= total_lines:
+                    start -= total_lines
+                    end -= start
+
+            # projects list
+            proc_list = self.cache.proc_list
+
+            i = 0
+            j = start + 1
+
+            for item in self.data[start:end]:
+                if i < total_lines:
+                    status = '[+]' if str(j) in proc_list else '[-]'
+                    number = ' ' + str(j) if len(self.data) < 100 and j < 10 else str(j)
+
+                    stdscr.addstr(i, 0, "{status} {number} {title}".format(
+                        status=status,
+                        number=number,
+                        title=item['title']
+                    ))
+
+                    i = i + 1
+                    j = j + 1
 
             # bottom info
-            bottom_info = "Press 'q' to exit"
+            bottom_info = "[<]=Prev [>]=Next [q]=Exit"
             stdscr.attron(curses.color_pair(1))
             stdscr.addstr(height - 1, 0, bottom_info)
             stdscr.addstr(height - 1, len(bottom_info), " " * (width - len(bottom_info) - 1))
