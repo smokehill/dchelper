@@ -112,14 +112,14 @@ class DCHelp:
                     title = 'TERMINAL RESIZE...'
                     c_y, c_x = int((win_height // 2) - 1), int((win_width // 2) - (len(title) // 2) - len(title) % 2)
                     stdscr.addstr(c_y, c_x, title, curses.color_pair(4))
-                    # reset params on screen resize
+                    # reset params
                     dc_total = win_height - 2
                     dc_start = 0
                     dc_end = dc_total
                 else:
                     # track arrow right
                     if k == curses.KEY_RIGHT:
-                        if len(self.data) > dc_total and len(self.data[dc_start:dc_end]) > dc_start:
+                        if len(self.data) > (dc_start + dc_total):
                             dc_start += dc_total
                             dc_end += dc_start
                     # track arrow left
@@ -138,7 +138,7 @@ class DCHelp:
                                 stdscr.addstr(i, 0, status, curses.color_pair(3))
                             else:
                                 stdscr.addstr(i, 0, status, curses.color_pair(4))
-                            if len(self.data) < 10:
+                            if len(self.data) < 10 or dc_total < 10 and dc_start == 0:
                                 stdscr.addstr(i, 3, number, curses.color_pair(5))
                                 stdscr.addstr(i, 6, item['title'], curses.color_pair(2))
                             else:
