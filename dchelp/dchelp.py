@@ -138,8 +138,12 @@ class DCHelp:
                                 stdscr.addstr(i, 0, status, curses.color_pair(3))
                             else:
                                 stdscr.addstr(i, 0, status, curses.color_pair(4))
-                            stdscr.addstr(i, 4, number, curses.color_pair(5))
-                            stdscr.addstr(i, 7, item['title'], curses.color_pair(2))
+                            if len(self.data) < 10:
+                                stdscr.addstr(i, 3, number, curses.color_pair(5))
+                                stdscr.addstr(i, 6, item['title'], curses.color_pair(2))
+                            else:
+                                stdscr.addstr(i, 4, number, curses.color_pair(5))
+                                stdscr.addstr(i, 7, item['title'], curses.color_pair(2))
                             i = i + 1
                             j = j + 1
                     # bottom info
