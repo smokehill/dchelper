@@ -62,11 +62,26 @@ class DCHelp:
             i = i + 1
 
     @check_data
-    def live(self, stdscr):
+    def live(self):
+        curses.wrapper(self.init_live)
+
+    def init_live(self, stdscr):
+        colors = {
+            'black': curses.COLOR_BLACK,        # 0
+            'red': curses.COLOR_RED,            # 1
+            'green': curses.COLOR_GREEN,        # 2
+            'yellow': curses.COLOR_YELLOW,      # 3
+            'blue': curses.COLOR_BLUE,          # 4
+            'magenta': curses.COLOR_MAGENTA,    # 5
+            'cyan': curses.COLOR_CYAN,          # 6
+            'white': curses.COLOR_WHITE,        # 7
+            'default': -1
+        }
         k = 0
-        total_lines = curses.LINES - 1
-        start = 0
-        end = total_lines
+        win_height, win_width = stdscr.getmaxyx()
+        dc_total = win_height - 2
+        dc_start = 0
+        dc_end = dc_total
 
         stdscr.clear()
         stdscr.refresh()
@@ -75,57 +90,80 @@ class DCHelp:
         curses.use_default_colors()
 
         curses.start_color()
-        curses.init_pair(1, 0, 2)
+        curses.init_pair(1, colors['black'], colors['blue'])
+        curses.init_pair(2, colors['white'], colors['default'])
+        curses.init_pair(3, colors['green'], colors['default'])
+        curses.init_pair(4, colors['red'], colors['default'])
+        curses.init_pair(5, colors['yellow'], colors['default'])
+        curses.init_pair(6, colors['blue'], colors['default'])
 
         while (k != ord('q')):
 
             stdscr.clear()
             self.cache = Cache()
-
-            height, width = stdscr.getmaxyx()
-
-            if k == curses.KEY_RIGHT:
-                if len(self.data) > total_lines and len(self.data[start:end]) > start:
-                    start += total_lines
-                    end += start
-
-            if k == curses.KEY_LEFT:
-                if start >= total_lines:
-                    start -= total_lines
-                    end -= start
-
-            # projects list
             proc_list = self.cache.proc_list
+            win_height, win_width = stdscr.getmaxyx()
 
-            i = 0
-            j = start + 1
-
-            for item in self.data[start:end]:
-                if i < total_lines:
-                    status = '[+]' if str(j) in proc_list else '[-]'
-                    number = ' ' + str(j) if len(self.data) < 100 and j < 10 else str(j)
-
-                    stdscr.addstr(i, 0, "{status} {number} {title}".format(
-                        status=status,
-                        number=number,
-                        title=item['title']
-                    ))
-
-                    i = i + 1
-                    j = j + 1
-
-            # bottom info
-            bottom_info = "[<]=Prev [>]=Next [q]=Exit"
-            stdscr.attron(curses.color_pair(1))
-            stdscr.addstr(height - 1, 0, bottom_info)
-            stdscr.addstr(height - 1, len(bottom_info), " " * (width - len(bottom_info) - 1))
-            stdscr.attroff(curses.color_pair(1))
+            if win_height < 10 or win_width < 40:
+                # catch small screen
+                title = 'TERMINAL TO SMALL'
+                c_y, c_x = int((win_height // 2) - 1), int((win_width // 2) - (len(title) // 2) - len(title) % 2)
+                stdscr.addstr(c_y, c_x, title, curses.color_pair(6))
+            else:
+                if k == curses.KEY_RESIZE:
+                    title = 'TERMINAL RESIZE...'
+                    c_y, c_x = int((win_height // 2) - 1), int((win_width // 2) - (len(title) // 2) - len(title) % 2)
+                    stdscr.addstr(c_y, c_x, title, curses.color_pair(6))
+                    # reset params on screen resize
+                    dc_total = win_height - 2
+                    dc_start = 0
+                    dc_end = dc_total
+                else:
+                    # track arrow right
+                    if k == curses.KEY_RIGHT:
+                        if len(self.data) > dc_total and len(self.data[dc_start:dc_end]) > dc_start:
+                            dc_start += dc_total
+                            dc_end += dc_start
+                    # track arrow left
+                    if k == curses.KEY_LEFT:
+                        if dc_start >= dc_total:
+                            dc_start -= dc_total
+                            dc_end -= dc_start
+                    # list projects
+                    i = 0
+                    j = dc_start + 1
+                    for item in self.data[dc_start:dc_end]:
+                        if i < dc_total:
+                            status = '[+]' if str(j) in proc_list else '[-]'
+                            number = ' ' + str(j) if len(self.data) < 100 and j < 10 else str(j)
+                            if str(j) in proc_list:
+                                stdscr.addstr(i, 0, status, curses.color_pair(3))
+                            else:
+                                stdscr.addstr(i, 0, status, curses.color_pair(4))
+                            stdscr.addstr(i, 4, number, curses.color_pair(5))
+                            stdscr.addstr(i, 7, item['title'], curses.color_pair(2))
+                            i = i + 1
+                            j = j + 1
+                    # bottom info
+                    bottom_info = "[<]Prev [>]Next [q]Exit"
+                    # stdscr.attron(curses.color_pair(1))
+                    # stdscr.addstr(win_height - 1, 0, bottom_info)
+                    # stdscr.addstr(win_height - 1, len(bottom_info), " " * (win_width - len(bottom_info) - 1))
+                    # stdscr.attroff(curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 0, '[<]', curses.color_pair(2))
+                    stdscr.addstr(win_height - 1, 3, 'Prev', curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 7, '[>]', curses.color_pair(2))
+                    stdscr.addstr(win_height - 1, 10, 'Next', curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 14, '[q]', curses.color_pair(2))
+                    stdscr.attron(curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 17, 'Exit')
+                    stdscr.addstr(win_height - 1, 21, " " * (win_width - 22))
+                    stdscr.attroff(curses.color_pair(1))
 
             stdscr.timeout(1000) # 1 sec.
             stdscr.refresh()
 
             k = stdscr.getch()
-
 
     @check_data
     def up(self):
