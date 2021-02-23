@@ -98,7 +98,6 @@ class DCHelp:
         curses.init_pair(6, colors['blue'], colors['default'])
 
         while (k != ord('q')):
-
             stdscr.clear()
             self.cache = Cache()
             proc_list = self.cache.proc_list
@@ -145,11 +144,7 @@ class DCHelp:
                             i = i + 1
                             j = j + 1
                     # bottom info
-                    bottom_info = "[<]Prev [>]Next [q]Exit"
-                    # stdscr.attron(curses.color_pair(1))
-                    # stdscr.addstr(win_height - 1, 0, bottom_info)
-                    # stdscr.addstr(win_height - 1, len(bottom_info), " " * (win_width - len(bottom_info) - 1))
-                    # stdscr.attroff(curses.color_pair(1))
+                    # [<]Prev [>]Next [q]Exit
                     stdscr.addstr(win_height - 1, 0, '[<]', curses.color_pair(2))
                     stdscr.addstr(win_height - 1, 3, 'Prev', curses.color_pair(1))
                     stdscr.addstr(win_height - 1, 7, '[>]', curses.color_pair(2))

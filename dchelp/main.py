@@ -24,13 +24,7 @@ parser.add_argument('--reset', help="down all projects", action="store_true")
 parser.add_argument('--test', help="unit tests", action="store_true")
 args = parser.parse_args()
 
-# traceback Ctrl-C
-def fire_escape(signum, frame):
-    # show cursor
-    subprocess.call('tput cnorm', shell=True)
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, fire_escape)
+signal.signal(signal.SIGINT, lambda x,y: sys.exit(0))
 dchelp = DCHelp()
 
 def main():
