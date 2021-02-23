@@ -6,7 +6,8 @@ Capabilities:
 - list projects
 - up and down project
 - reset all active projects
-- extra features (live mode, common statistics)
+- live mode
+- common statistics
 
 ![](example.gif)
 
