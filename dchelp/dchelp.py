@@ -90,12 +90,11 @@ class DCHelp:
         curses.use_default_colors()
 
         curses.start_color()
-        curses.init_pair(1, colors['black'], colors['blue'])
+        curses.init_pair(1, colors['black'], colors['white'])
         curses.init_pair(2, colors['white'], colors['default'])
         curses.init_pair(3, colors['green'], colors['default'])
         curses.init_pair(4, colors['red'], colors['default'])
         curses.init_pair(5, colors['yellow'], colors['default'])
-        curses.init_pair(6, colors['blue'], colors['default'])
 
         while (k != ord('q')):
             stdscr.clear()
@@ -107,12 +106,12 @@ class DCHelp:
                 # catch small screen
                 title = 'TERMINAL TO SMALL'
                 c_y, c_x = int((win_height // 2) - 1), int((win_width // 2) - (len(title) // 2) - len(title) % 2)
-                stdscr.addstr(c_y, c_x, title, curses.color_pair(6))
+                stdscr.addstr(c_y, c_x, title, curses.color_pair(4))
             else:
                 if k == curses.KEY_RESIZE:
                     title = 'TERMINAL RESIZE...'
                     c_y, c_x = int((win_height // 2) - 1), int((win_width // 2) - (len(title) // 2) - len(title) % 2)
-                    stdscr.addstr(c_y, c_x, title, curses.color_pair(6))
+                    stdscr.addstr(c_y, c_x, title, curses.color_pair(4))
                     # reset params on screen resize
                     dc_total = win_height - 2
                     dc_start = 0
@@ -144,16 +143,12 @@ class DCHelp:
                             i = i + 1
                             j = j + 1
                     # bottom info
-                    # [<]Prev [>]Next [q]Exit
-                    stdscr.addstr(win_height - 1, 0, '[<]', curses.color_pair(2))
-                    stdscr.addstr(win_height - 1, 3, 'Prev', curses.color_pair(1))
-                    stdscr.addstr(win_height - 1, 7, '[>]', curses.color_pair(2))
-                    stdscr.addstr(win_height - 1, 10, 'Next', curses.color_pair(1))
-                    stdscr.addstr(win_height - 1, 14, '[q]', curses.color_pair(2))
-                    stdscr.attron(curses.color_pair(1))
-                    stdscr.addstr(win_height - 1, 17, 'Exit')
-                    stdscr.addstr(win_height - 1, 21, " " * (win_width - 22))
-                    stdscr.attroff(curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 0, ' < ', curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 4, 'Prev', curses.color_pair(2))
+                    stdscr.addstr(win_height - 1, 9, ' > ', curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 13, 'Next', curses.color_pair(2))
+                    stdscr.addstr(win_height - 1, 18, ' q ', curses.color_pair(1))
+                    stdscr.addstr(win_height - 1, 22, 'Exit', curses.color_pair(2))
 
             stdscr.timeout(1000) # 1 sec.
             stdscr.refresh()
