@@ -9,6 +9,8 @@ Capabilities:
 - live mode
 - common statistics
 
+> The common idea of this tool is to simplify `up` and `down` actions with `docker-compose` and it doesn't track a real state of the project containers. So in any confusing situation when project id is cached but containers aren't running use `--reset` option to clear all docker units.
+
 ![](example.gif)
 
 ## Install
