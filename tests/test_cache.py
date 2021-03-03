@@ -1,10 +1,10 @@
 import os
 import unittest
 
-from cache import Cache
+from dchelp.cache import Cache
 
 
-class TestCacheMethods(unittest.TestCase):
+class TestCache(unittest.TestCase):
 
     cache = None
 

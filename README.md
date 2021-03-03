@@ -18,8 +18,7 @@ Capabilities:
 ```
 git clone https://github.com/smokehill/dchelp.git
 cd dchelp/
-sudo ./sh/install.sh
-dchelp
+pip install .
 ```
 
 ## Settings

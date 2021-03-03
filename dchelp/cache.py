@@ -6,10 +6,19 @@ class Cache:
     proc_file = ''
     proc_list = []
 
-    def __init__(self, f_name = None):
+    def __init__(self, name = None):
+        name = name if name is not None else 'proc'
+        cache_dir = os.path.expanduser('~') + '/.cache/dchelp'
+
+        # create cache dir
+        if os.path.isdir(cache_dir) == False:
+            try:
+                os.makedirs(cache_dir)
+            except OSError:
+                raise OSError(2, cache_dir + ' not exists.')
+
         # init proc_file
-        f_name = f_name if f_name is not None else 'proc'
-        self.proc_file = os.path.expanduser('~') + '/.cache/dchelp/' + f_name
+        self.proc_file = cache_dir + '/' + name
         if os.path.isfile(self.proc_file) == False:
             f = open(self.proc_file, 'w')
             f.close()

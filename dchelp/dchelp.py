@@ -15,13 +15,27 @@ class DCHelp:
     cache = None
 
     def __init__(self):
-        # init data
-        f_path = os.path.expanduser('~') + '/.config/dchelp/data.json'
-        if os.path.isfile(f_path) == False and os.access(f_path, os.R_OK) == False:
-            print("%s not exists or not readable." % f_path)
-            sys.exit(1)
-        with open(f_path) as f:
-            self.data = json.load(f)
+        config_dir = os.path.expanduser('~') + '/.config/dchelp'
+        config_file = config_dir + '/data.json'
+
+        if os.path.isdir(config_dir) == False:
+            # create config dir
+            try:
+                os.makedirs(config_dir)
+            except OSError:
+                raise OSError(2, config_dir + ' not exists.')
+            # create config file
+            if os.path.isdir(config_dir) == True:
+                config_file = open(config_file, 'w')
+                config_file.write("[]")
+                config_file.close()
+        else:
+            # init data
+            if os.path.isfile(config_file) == False:
+                print(config_file + 'not exists.')
+                sys.exit(1)
+            with open(config_file) as f:
+                self.data = json.load(f)
 
         # init cache
         self.cache = Cache()
