@@ -13,6 +13,13 @@ Capabilities:
 
 ![](example.gif)
 
+## Dependencies
+
+```
+docker
+docker-compose
+```
+
 ## Install
 
 ```
