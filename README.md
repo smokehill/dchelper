@@ -1,5 +1,7 @@
 # dchelp
 
+[![Build Status](https://travis-ci.com/smokehill/dchelp.svg?branch=master)](https://travis-ci.com/smokehill/dchelp)
+
 Console tool for managing docker-compose projects.
 
 Capabilities:
