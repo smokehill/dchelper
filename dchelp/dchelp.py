@@ -186,6 +186,8 @@ class DCHelp:
         except ValueError:
             print('Bad argument!')
             sys.exit(1)
+        except EOFError:
+            sys.exit(0)
 
         if str(number) in proc_list:
             print('Project is running.')
@@ -210,6 +212,8 @@ class DCHelp:
         except ValueError:
             print('Bad argument!')
             sys.exit(1)
+        except EOFError:
+            sys.exit(0)
 
         if str(number) not in proc_list:
             print('Project is not running.')
