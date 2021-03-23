@@ -1,6 +1,6 @@
 # dchelp
 
-[![Build Status](https://travis-ci.com/smokehill/dchelp.svg?branch=master)](https://travis-ci.com/smokehill/dchelp)
+[![Build Status](https://travis-ci.com/blues911/dchelp.svg?branch=master)](https://travis-ci.com/blues911/dchelp)
 
 Console tool for managing docker-compose projects.
 
@@ -25,7 +25,7 @@ docker-compose
 ## Install
 
 ```
-git clone https://github.com/smokehill/dchelp.git
+git clone https://github.com/blues911/dchelp.git
 cd dchelp/
 pip install .
 ```
